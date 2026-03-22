@@ -11,9 +11,8 @@ pca.frequency = 50
 # Initialize servo as 270-degree
 claw_servo = servo.Servo(pca.channels[0], actuation_range=270, min_pulse=500, max_pulse=2500)
 
-# Center both servos to start
+# Center servos to start
 claw_servo.angle = 135
-winch_servo.angle = 135
 time.sleep(1)
 
 try:
