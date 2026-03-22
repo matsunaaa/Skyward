@@ -17,20 +17,17 @@ time.sleep(1)
 
 try:
     while True:
-        print("Claw:40 deg")
-        claw_servo.angle = 40 
-        time.sleep(2)
-
         print("Claw:60 deg")
         claw_servo.angle = 60 
         time.sleep(2)
+
 
         print("Claw:110 deg")
         claw_servo.angle = 110
         time.sleep(2)
         
-        print("Claw:140 deg")
-        claw_servo.angle = 150 
+        print("Claw:180 deg")
+        claw_servo.angle = 180 
         time.sleep(2)
 
 
