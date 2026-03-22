@@ -30,7 +30,7 @@ try:
         time.sleep(2)
         
         print("Claw:140 deg")
-        claw_servo.angle = 140 
+        claw_servo.angle = 150 
         time.sleep(2)
 
 
