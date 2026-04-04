@@ -17,10 +17,6 @@ master.mav.request_data_stream_send(
     master.target_system, master.target_component,
     mavutil.mavlink.MAV_DATA_STREAM_RC_CHANNELS, 10, 1
 )
-master.mav.request_data_stream_send(
-    master.target_system, master.target_component,
-    mavutil.mavlink.MAV_DATA_STREAM_HEARTBEAT, 2, 1
-)
 
 # State Trackers
 flight_mode = "UNKNOWN"
