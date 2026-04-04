@@ -3,7 +3,7 @@ import sys
 
 # Establish Connection
 try:
-    master = mavutil.mavlink_connection('/dev/serial0', baud=57600)
+    master = mavutil.mavlink_connection('/dev/serial0', baud=115200)
     master.wait_heartbeat(timeout=10)
     if not master.target_system:
         print("ERROR: No heartbeat detected. Check serial wiring and baud rate.")
