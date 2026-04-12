@@ -37,7 +37,7 @@ master.mav.request_data_stream_send(
 # --- Helper Functions ---
 def send_hud_alert(message):
     master.mav.statustext_send(
-        mavutil.mavlink.MAV_SEVERITY_EMERGENCY, 
+        mavutil.mavlink.MAV_SEVERITY_INFO, 
         message.encode('utf-8')
     )
 
