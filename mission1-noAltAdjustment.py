@@ -91,13 +91,12 @@ try:
         
         # 2. Process RC Commands (SD Switch on Channel 11)
         if rc_msg:
-            # Switch SD UP (Low value ~1000) - Pi Takes Over
+            # If SD Up is low value (~1000)
             if getattr(rc_msg, 'chan11_raw', 0) < 1200 and not in_autonomous_mode:
                 in_autonomous_mode = True
                 set_guided_mode()
                 send_hud_alert("AUTO ALIGNMENT ENGAGED")
-            
-            # Switch SD MIDDLE or DOWN (> 1200) - Manual Control
+            # If SD is Middle or Down (>1200)
             elif getattr(rc_msg, 'chan11_raw', 0) > 1200 and in_autonomous_mode:
                 in_autonomous_mode = False
                 set_loiter_mode()
@@ -131,20 +130,21 @@ try:
                     send_hud_alert("RED TARGET SPOTTED")
                     last_alert_time = time.time()
 
-        # 4. Autonomous Flight Control Vectoring
+        # 4. Autonomous Flight Control Vectoring (REPLACED BLOCK)
         if in_autonomous_mode and target_found:
             # Check if drone is centered over the target
             if abs(error_x) < ALIGNMENT_THRESHOLD and abs(error_y) < ALIGNMENT_THRESHOLD:
-                # FIXED: Hover only. No descent for safety during test flight.
+                # Hover only. No descent for safety.
                 send_velocity_command(0, 0, 0) 
                 if time.time() - last_alert_time > 2:
                     send_hud_alert("CENTERED - HOLDING POSITION")
                     last_alert_time = time.time()
             else:
-                # Calculate horizontal velocity based on pixel error
+                # vx is Forward/Backward. 
+                # Note: -error_y means if target is "above" center, move forward.
                 vx = max(min(-error_y * KP_XY, 0.5), -0.5)
                 vy = max(min(error_x * KP_XY, 0.5), -0.5)
-                send_velocity_command(vx, vy, 0) # vz is 0 to maintain altitude
+                send_velocity_command(vx, vy, 0) 
                 
         elif in_autonomous_mode and not target_found:
             # If target lost, stop moving immediately
