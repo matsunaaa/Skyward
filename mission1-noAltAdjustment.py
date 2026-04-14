@@ -91,13 +91,14 @@ try:
         
         # 2. Process RC Commands (SD Switch on Channel 11)
         if rc_msg:
-            # Switch SD UP (>1500)
-            if getattr(rc_msg, 'chan11_raw', 0) > 1500 and not in_autonomous_mode:
+            # Switch SD UP (Low value ~1000) - Pi Takes Over
+            if getattr(rc_msg, 'chan11_raw', 0) < 1200 and not in_autonomous_mode:
                 in_autonomous_mode = True
                 set_guided_mode()
                 send_hud_alert("AUTO ALIGNMENT ENGAGED")
-            # Switch SD DOWN (<1500)
-            elif getattr(rc_msg, 'chan11_raw', 0) < 1500 and in_autonomous_mode:
+            
+            # Switch SD MIDDLE or DOWN (> 1200) - Manual Control
+            elif getattr(rc_msg, 'chan11_raw', 0) > 1200 and in_autonomous_mode:
                 in_autonomous_mode = False
                 set_loiter_mode()
                 send_hud_alert("MANUAL OVERRIDE")
